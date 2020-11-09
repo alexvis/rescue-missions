@@ -10,6 +10,17 @@
   </head>
 
   <body>
+    <%=link_to 'Home', questions_path%>
+
     <%= yield %>
+
+
+    <div>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%=alert%></p>
+    </div>
+
   </body>
+
+
 </html>

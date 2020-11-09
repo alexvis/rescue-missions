@@ -1,0 +1,11 @@
+<h1>Question</h1>
+
+
+<p><%= @question.title %></p>
+
+<p><%=@question.comment%></p>
+
+
+
+<%=link_to 'Delete',@question, method: :delete, data: { confirm: "Are you sure?"}%>
+<%=link_to 'Edit', edit_question_path(@question.id)%>
