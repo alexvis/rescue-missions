@@ -3,6 +3,7 @@
 
 <% @questions.each do |question| %>
 <%=link_to question.title, question_path(question.id)%><br>
+<p>Created in <%=question.created_at.strftime("%B %d %Y")%> at</p>
 <% end %>
 
 

@@ -2,11 +2,16 @@ class QuestionsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
-    @questions = Question.all
+    questions = Question.all
+    @questions = questions.reverse()
+
   end
 
   def show
     @question = Question.find(params[:id])
+    @answer = Answer.new
+    @time = @question.created_at.strftime("%B %d %Y")
+    @answers = Answer.where(question_id: @question.id)
   end
 
   def new
