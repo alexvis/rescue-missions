@@ -11,6 +11,18 @@ class AnswersController < ApplicationController
     end
   end
 
+  def edit
+    @answer = Answer.find(params[:id])
+    binding.pry
+  end
+
+  def update
+    @answer = Answer.find(params[:id])
+    if @answer.update(answer_params)
+      redirect_to question_path(@answer.question_id)
+    end
+  end
+
   def destroy
     answer = Answer.find(params[:id])
     answer.destroy
@@ -20,6 +32,6 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:title, :discription, :question_id)
+    params.require(:answer).permit(:title, :discription, :question_id, :best_answer)
   end
 end

@@ -12,6 +12,13 @@ class QuestionsController < ApplicationController
     @answer = Answer.new
     @time = @question.created_at.strftime("%B %d %Y")
     @answers = Answer.where(question_id: @question.id)
+
+    best_answer = @answers.where(best_answer: true)
+
+    if !best_answer.empty?
+      index = @answers.find_index {|obj| obj.id == best_answer[0].id}
+      @best_answer = @answers.slice(index)
+    end
   end
 
   def new

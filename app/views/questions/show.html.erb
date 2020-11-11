@@ -1,5 +1,6 @@
-<h1>Question</h1>
+<!-- Question show page  -->
 
+<h1>Question</h1>
 
 <p><%= @question.title %></p>
 
@@ -7,14 +8,11 @@
 
 <p>Created at <%=@time%></p>
 
-
-
-
-
 <%=link_to 'Delete',@question, method: :delete, data: { confirm: "Are you sure?"}%>
 <%=link_to 'Edit', edit_question_path(@question.id)%>
 
 
+<!--For for add anwsers to the question -->
 <%= form_for @answer, html: {class: ''} do |f| %>
   <%= f.label :title %>
   <%= f.text_field :title %>
@@ -29,8 +27,44 @@
 
 <br>
 
-<%@answers.each do |answer|%>
-<br><%= answer.title%><br>
-<%= answer.discription%><br>
-<%=link_to 'Delete', answer, method: :delete%>
+<!-- If is not a best_answer from controller question it will triger thid if -->
+<%if @best_answer == nil%>
+  <!--Print all answer -->
+  <%@answers.each do |answer|%>
+    <br><%= answer.title%><br>
+    <%= answer.discription%><br>
+    <!--Add a button for change the best_answer to true  -->
+    <%= form_for answer, :method => :PUT do |f| %>
+      <%= f.hidden_field :title, value: answer.title%>
+      <%= f.hidden_field :discription, value: answer.discription%>
+      <%= f.hidden_field :best_answer, value: true%>
+
+      <%= f.submit "best answer?", class: 'button submit-button' %>
+    <% end %>
+
+    <%=link_to 'Delete', answer, method: :delete%>
+  <%end%>
+
+<%else%>
+<!--if is a best_answer here will be printed -->
+  <h1 style="color: blue"><%=@best_answer.title%><br></h1>
+  <p style="color: brown"><%=@best_answer.discription%></p>
+
+  <%= form_for @best_answer, :method => :PUT do |f| %>
+    <%= f.hidden_field :title, value: @best_answer.title%>
+    <%= f.hidden_field :discription, value: @best_answer.discription%>
+    <%= f.hidden_field :best_answer, value: false%>
+
+  <%= f.submit "Remove Best Tag", class: 'button submit-button' %>
+
+  <%@answers.each do |answer|%>
+    <%if answer.best_answer != true%>
+      <br><%= answer.title%><br>
+      <%= answer.discription%><br>
+
+      <%=link_to 'Delete', answer, method: :delete%>
+    <%end%>
+  <%end%>
+
+<% end %>
 <%end%>
