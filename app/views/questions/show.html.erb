@@ -13,14 +13,12 @@
 
 
 <!--For for add anwsers to the question -->
-<%= form_for @answer, html: {class: ''} do |f| %>
+<%= form_for [@question, @answer], html: {class: ''} do |f| %>
   <%= f.label :title %>
   <%= f.text_field :title %>
 
   <%= f.label :discription, 'Comment' %>
   <%= f.text_area :discription, size: "60x6" %>
-
-  <%= f.hidden_field :question_id, value: @question.id%>
 
   <%= f.submit "Submit", class: 'button submit-button' %>
 <% end %>

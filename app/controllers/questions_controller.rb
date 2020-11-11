@@ -11,8 +11,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @answer = Answer.new
     @time = @question.created_at.strftime("%B %d %Y")
-    @answers = Answer.where(question_id: @question.id)
-
+    @answers = @question.answer
     best_answer = @answers.where(best_answer: true)
 
     if !best_answer.empty?
